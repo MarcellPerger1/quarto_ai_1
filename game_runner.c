@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
 
 #include "game_runner.h"
 #include "gamestate.h"
@@ -71,11 +73,17 @@ void GR_displayFull(const GameRunner *gr) {
   printf("Draw (board full)\n");
 }
 
+int getBinaryInput(int *out);
 IF8 GR_getGive(const GameRunner *gr) {
   while (1) {
     int p;
     printf("Enter piece to give: ");
-    if (getInput(&p, 10, "%d", NULL)) {
+#ifdef GIVE_AS_BINARY
+    if (getBinaryInput(&p))
+#else
+    if (getInput(&p, 10, "%d", NULL))
+#endif
+    {
       continue;
     }
     if (!(0 <= p && p < 16)) {
@@ -93,7 +101,9 @@ IF8 GR_getGive(const GameRunner *gr) {
 UIF8 GR_getPlace(const GameRunner *gr) {
   while (1) {
     int p;
-    printf("Enter where to place piece %i: ", gr->gs.given);
+    printf("Enter where to place piece "_BIN4_FMT
+           ": ",
+           _TO_BIN4_STR_REV(gr->gs.given));
     if (getInput(&p, 10, "%d", NULL)) {
       continue;
     }
@@ -123,7 +133,25 @@ int getInput(void *out, size_t buf_sz, char *fmt, char *line) {
     }
   } else {
     printf("\nStream was closed unexpectedly!\n");
-    exit(1);  // eg. Ctrl+D just closes stdin!
+    exit(1); // eg. Ctrl+D just closes stdin!
   }
+  return 0; // OK
+}
+
+int getBinaryInput(int *out) {
+  char line[100];
+  if (!fgets(line, 100, stdin)) {
+    printf("\nStream was closed unexpectedly!\n");
+    exit(1); // eg. Ctrl+D just closes stdin!
+  }
+  char bin_str[10];
+  char _overflow[100];
+  if (sscanf(line, " %4[01] %100s", bin_str, _overflow) != 1) {
+    if (line[0] != '\n') {
+      printf("Invalid input\n");
+    }
+    return 1; // invaild input
+  }
+  *out = strtoul(bin_str, NULL, 2);
   return 0; // OK
 }

@@ -5,6 +5,10 @@
 #include <stddef.h>
 #include "gamestate.h"
 
+#ifndef GIVE_AS_BINARY
+#define GIVE_AS_BINARY 1
+#endif
+
 typedef struct _GameRunner{
   GameState gs;
   IF8 winner;
