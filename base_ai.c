@@ -1,6 +1,6 @@
 #include "gamestate.h"
 
-// returns amount of moves in out (it should be 16+ big)
+// returns array of moves in out (it should be 16+ big)
 // actual return value is amount of moves
 IF8 GS_getGiveMoves(const GameState *gs, GameState out[16]) {
   UIF16 mask = 1;
