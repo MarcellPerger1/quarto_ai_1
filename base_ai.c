@@ -6,7 +6,7 @@ IF8 GS_getGiveMoves(const GameState *gs, GameState out[16]) {
   UIF16 mask = 1;
   IF8 n = 0;
   for (IF8 i = 0; i < 16; ++i) {
-    if (!(gs->pieces_left & mask)) {
+    if (gs->pieces_left & mask) {
       out[n++] = GS_givePiece(gs, i);
     }
     mask <<= 1;
@@ -18,7 +18,7 @@ IF8 GS_getPlaceMoves(const GameState *gs, GameState out[16]) {
   UIF16 mask = 1;
   IF8 n = 0;
   for (IF8 i = 0; i < 16; ++i) {
-    if ((gs->places_left & mask) == 0) {
+    if (gs->places_left & mask) {
       out[n++] = GS_placePiece(gs, i);
     }
     mask <<= 1;

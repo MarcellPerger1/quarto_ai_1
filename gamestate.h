@@ -1,12 +1,7 @@
 #ifndef _GAMESTATE_H_
 #define _GAMESTATE_H_
 
-#include <stdint.h>
-
-#define IF8 int_fast8_t
-#define UIF8 uint_fast8_t
-#define IF16 int_fast16_t
-#define UIF16 uint_fast16_t
+#include "types.h"
 
 #define P_EMPTY ((IF8)(-1))
 // (15<<1)+1

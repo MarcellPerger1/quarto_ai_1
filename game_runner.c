@@ -1,10 +1,11 @@
+#include <inttypes.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
 
 #include "game_runner.h"
-#include "gamestate.h"
+#include "minimax_ai.h"
 
 GameRunner GR_new() {
   GameRunner gr = {GS_empty(), .winner = 0, .player = 0};
@@ -13,10 +14,13 @@ GameRunner GR_new() {
 
 void GR_run(GameRunner *gr) {
   while (1) {
+    printf("value=%"PRIdFAST8"\n", MMAB_getValue(&gr->gs, 2, -1, 1, true));
     GR_ShowPlayer(gr);
     GR_showBoard(gr);
     IF8 given = GR_getGive(gr);
     gr->gs = GS_givePiece(&gr->gs, given);
+    printf("value=%"PRIdFAST8"\n", MMAB_getValue(&gr->gs, 2, -1, 1, true));
+    GR_ShowPlayer(gr);
     UIF8 at = GR_getPlace(gr);
     gr->gs = GS_placePiece(&gr->gs, at);
     if (GR_testEnd(gr)) {
@@ -39,7 +43,7 @@ bool GR_testEnd(GameRunner *gr) {
 }
 
 void GR_ShowPlayer(const GameRunner *gr) {
-  printf("Player %i's turn\n", GS_Player(&gr->gs) + 1);
+  printf("Player %i's turn\n", (GS_Player(&gr->gs)^GS_TurnType(&gr->gs)) + 1);
 }
 
 #define _TO_BIN4_STR_REV(v)                                                    \

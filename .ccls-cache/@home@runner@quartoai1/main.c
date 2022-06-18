@@ -2,6 +2,7 @@
 #include "gamestate.h"
 #include "base_ai.h"
 #include "game_runner.h"
+#include "minimax_ai.h"
 
 int main(void) {
   printf("Hello World\n");
