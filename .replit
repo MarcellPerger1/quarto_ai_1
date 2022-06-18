@@ -1,7 +1,7 @@
 compile = ["make",  "-s"]
 run = "./main"
 entrypoint = "main.c"
-hidden = ["main", "**/*.o", ".ccls-cache", "Makefile"]
+hidden = ["main", "**/*.o", ".ccls-cache"]
 
 [languages.c]
 pattern = "**/*.{c,h}"
