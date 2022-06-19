@@ -6,7 +6,7 @@
 #include <stdio.h>
 
 int main(int argc, char **argv) {
-  printf("Hello World\n");
+  printf("Hello World 3\n");
   unsigned int depth = 10;
   if (argc > 1) {
     sscanf(argv[1], " %d", &depth);
