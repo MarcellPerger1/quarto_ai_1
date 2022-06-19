@@ -127,7 +127,7 @@ IF8 MMAB_getValue(GameState *gs, UIF8 depth, IF8 alpha, IF8 beta, bool is_max) {
   return value;
 }
 
-IF8 MMAB_getValueTop(GameState *gs, UIF8 depth){
+IF8 MMAB_getValueTop_printStats(GameState *gs, UIF8 depth){
   // print call values
   printf("Searching futures up to %d moves away.\n", depth);
   // setup for stats
@@ -144,6 +144,11 @@ IF8 MMAB_getValueTop(GameState *gs, UIF8 depth){
   perft_toStr(ttaken, time_str, 32);
   // print stats
   printf("Searched %lu futures in %ss.\n", COUNT, time_str);
-  
+  return v;
+}
+
+IF8 MMAB_getValueTop(GameState *gs, UIF8 depth){
+  // compute value
+  IF8 v = MMAB_getValue(gs, depth, -1, 1, true);
   return v;
 }
