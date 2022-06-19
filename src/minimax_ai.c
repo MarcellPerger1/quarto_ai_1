@@ -7,6 +7,9 @@
 #include "gamestate.h"
 #include "minimax_ai.h"
 #include "utils.h"
+#include "timelib.h"
+
+unsigned long COUNT = 0;
 
 // MMAB_ = Minimax alpha-beta bruning
 IF8 MMAB_getValue_debug(GameState *gs, UIF8 depth, IF8 alpha, IF8 beta,
@@ -79,9 +82,11 @@ IF8 MMAB_getValue_debug(GameState *gs, UIF8 depth, IF8 alpha, IF8 beta,
 
 IF8 MMAB_getValue(GameState *gs, UIF8 depth, IF8 alpha, IF8 beta, bool is_max) {
   if (GS_isWon(gs)) {
+    COUNT += 1;
     return is_max ? 1 : -1;
   }
   if (!depth || GS_IsFull(gs)) {
+    COUNT += 1;
     return 0;
   }
   UIF8 is_place = GS_TurnType(gs);
@@ -123,5 +128,22 @@ IF8 MMAB_getValue(GameState *gs, UIF8 depth, IF8 alpha, IF8 beta, bool is_max) {
 }
 
 IF8 MMAB_getValueTop(GameState *gs, UIF8 depth){
-  return MMAB_getValue(gs, depth, -1, 1, true);
+  // print call values
+  printf("Searching futures up to %d moves away.\n", depth);
+  // setup for stats
+  COUNT = 0;
+  perf_t t1 = perf_counter();
+
+  // compute value
+  IF8 v = MMAB_getValue(gs, depth, -1, 1, true);
+
+  // process stats
+  perf_t t2 = perf_counter();
+  perf_t ttaken = tdiff(t2, t1);
+  char time_str[32];
+  perft_toStr(ttaken, time_str, 32);
+  // print stats
+  printf("Searched %lu futures in %ss.\n", COUNT, time_str);
+  
+  return v;
 }

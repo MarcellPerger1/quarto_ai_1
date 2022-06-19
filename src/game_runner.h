@@ -16,7 +16,7 @@ typedef struct _GameRunner{
 } GameRunner;
 
 GameRunner GR_new();
-void GR_run(GameRunner *gr);
+void GR_run(GameRunner *gr, int depth);
 
 bool GR_testEnd(GameRunner *gr);
 

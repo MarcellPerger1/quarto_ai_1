@@ -12,14 +12,15 @@ GameRunner GR_new() {
   return gr;
 }
 
-void GR_run(GameRunner *gr) {
+void GR_run(GameRunner *gr, int depth) {
+  UIF8 d = depth;
   while (1) {
-    printf("value=%"PRIdFAST8"\n", MMAB_getValue(&gr->gs, 2, -1, 1, true));
+    printf("value=%"PRIdFAST8"\n", MMAB_getValueTop(&gr->gs, d));
     GR_ShowPlayer(gr);
     GR_showBoard(gr);
     IF8 given = GR_getGive(gr);
     gr->gs = GS_givePiece(&gr->gs, given);
-    printf("value=%"PRIdFAST8"\n", MMAB_getValue(&gr->gs, 2, -1, 1, true));
+    printf("value=%"PRIdFAST8"\n", MMAB_getValueTop(&gr->gs, d));
     GR_ShowPlayer(gr);
     UIF8 at = GR_getPlace(gr);
     gr->gs = GS_placePiece(&gr->gs, at);

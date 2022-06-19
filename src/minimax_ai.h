@@ -9,4 +9,6 @@ IF8 MMAB_getValue_debug(GameState *gs, UIF8 depth, IF8 alpha, IF8 beta, bool is_
 
 IF8 MMAB_getValue(GameState *gs, UIF8 depth, IF8 alpha, IF8 beta, bool is_max);
 
+IF8 MMAB_getValueTop(GameState *gs, UIF8 depth);
+
 #endif
