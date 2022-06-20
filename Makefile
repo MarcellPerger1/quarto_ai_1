@@ -16,8 +16,6 @@ OBJS = $(patsubst src/%.c, target/%.o, $(patsubst ./src/%.c, ./target/%.o, $(SRC
 
 main: $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o target/main
-	@cp target/main main
-
 
 clean:
 	rm -f $(OBJS) main target/main
