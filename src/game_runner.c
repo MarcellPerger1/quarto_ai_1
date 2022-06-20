@@ -13,14 +13,13 @@ GameRunner GR_new() {
 }
 
 void GR_run(GameRunner *gr, int depth) {
-  UIF8 d = depth;
   while (1) {
-    printf("Position outcome is %"PRIdFAST8"\n", MMAB_getValueTop(&gr->gs, d));
+    GR_printOutcome(gr, depth);
     GR_ShowPlayer(gr);
     GR_showBoard(gr);
     IF8 given = GR_getGive(gr);
     gr->gs = GS_givePiece(&gr->gs, given);
-    printf("Position outcome is %"PRIdFAST8"\n", MMAB_getValueTop(&gr->gs, d));
+    GR_printOutcome(gr, depth);
     GR_ShowPlayer(gr);
     UIF8 at = GR_getPlace(gr);
     gr->gs = GS_placePiece(&gr->gs, at);
@@ -28,6 +27,10 @@ void GR_run(GameRunner *gr, int depth) {
       break;
     }
   }
+}
+
+void GR_printOutcome(GameRunner *gr, UIF8 depth){
+  printf("Position outcome is %"PRIdFAST8"\n", MMAB_getValueTop_printStats(&gr->gs, depth));
 }
 
 bool GR_testEnd(GameRunner *gr) {

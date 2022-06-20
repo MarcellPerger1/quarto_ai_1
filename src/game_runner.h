@@ -20,6 +20,7 @@ void GR_run(GameRunner *gr, int depth);
 
 bool GR_testEnd(GameRunner *gr);
 
+void GR_printOutcome(GameRunner *gr, UIF8 depth);
 void GR_ShowPlayer(const GameRunner *gr);
 void GR_showBoard(const GameRunner *gr);
 void GR_displayWin(const GameRunner *gr);
