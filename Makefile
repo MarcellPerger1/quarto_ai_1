@@ -15,10 +15,11 @@ OBJS = $(patsubst src/%.c, target/%.o, $(patsubst ./src/%.c, ./target/%.o, $(SRC
 	$(CC) $(CFLAGS) -c $< -o $@ 
 
 main: $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o main
+	$(CC) $(CFLAGS) $(OBJS) -o target/main
+	@cp target/main main
 
 
 clean:
-	rm -f $(OBJS) main
+	rm -f $(OBJS) main target/main
 
 .PHONY: main clean
