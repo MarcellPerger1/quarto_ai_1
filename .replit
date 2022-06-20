@@ -1,6 +1,6 @@
 compile = ["make",  "-s"]
-run = "./main"
-entrypoint = "main.c"
+run = "./target/main"
+entrypoint = "src/main.c"
 hidden = ["main", "**/*.o", ".ccls-cache"]
 
 [languages.c]
